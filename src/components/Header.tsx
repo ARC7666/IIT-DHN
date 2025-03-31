@@ -40,23 +40,29 @@ const Header = ({ darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar }: H
       <div className="flex items-center">
         {isMobile ? (
           <button 
-            className="p-2 mr-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+            className="p-2 mr-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-md transition-colors"
             onClick={toggleSidebar}
           >
             {sidebarCollapsed ? <Menu size={24} /> : <X size={24} />}
           </button>
-        ) : null}
-        <div className="floww-logo flex items-center font-bold text-lg">
-          <span className="text-blue-600 text-xl">ẞ</span>floww
-        </div>
+        ) : (
+          <div className="floww-logo flex items-center font-bold text-lg mr-4">
+            <span className="text-blue-600 text-xl">ẞ</span>floww
+          </div>
+        )}
+        
         {!isMobile && (
-          <div className="ml-4">
-            <button 
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
-              onClick={toggleSidebar}
-            >
-              {sidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-            </button>
+          <button 
+            className="flex items-center justify-center h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 dark:hover:bg-blue-800/30 transition-colors"
+            onClick={toggleSidebar}
+          >
+            {sidebarCollapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
+          </button>
+        )}
+        
+        {isMobile && (
+          <div className="floww-logo flex items-center font-bold text-lg">
+            <span className="text-blue-600 text-xl">ẞ</span>floww
           </div>
         )}
       </div>

@@ -225,3 +225,29 @@
     padding: 0.2rem 0.5rem;
   }
 }
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #EEF2FF;
+  color: #4F46E5;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sidebar-toggle:hover {
+  background-color: #E0E7FF;
+}
+
+.dark .sidebar-toggle {
+  background-color: rgba(79, 70, 229, 0.2);
+}
+
+.dark .sidebar-toggle:hover {
+  background-color: rgba(79, 70, 229, 0.3);
+}

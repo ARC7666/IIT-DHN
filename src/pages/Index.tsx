@@ -15,7 +15,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -30,6 +30,8 @@ const Index = () => {
     // Always collapse sidebar on mobile by default
     if (isMobile) {
       setSidebarCollapsed(true);
+    } else {
+      setSidebarCollapsed(false);
     }
   }, [isMobile]);
 
