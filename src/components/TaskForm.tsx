@@ -17,11 +17,11 @@ const TaskForm = () => {
   const [teamDropdownOpen, setTeamDropdownOpen] = useState(false);
 
   const teamOptions = [
-    "Frontend Development",
-    "Backend Development",
-    "UI/UX Design",
-    "Sales",
-    "Human Resources (HR)"
+    { name: "Frontend Development", bgColor: "bg-indigo-100" },
+    { name: "Backend Development", bgColor: "bg-green-100" },
+    { name: "UI/UX Design", bgColor: "bg-purple-100" },
+    { name: "Sales", bgColor: "bg-blue-100" },
+    { name: "Human Resources (HR)", bgColor: "bg-orange-100" }
   ];
 
   const handleReset = () => {
@@ -66,7 +66,7 @@ const TaskForm = () => {
     setTeamDropdownOpen(!teamDropdownOpen);
   };
 
-  const selectTeam = (team: string) => {
+  const selectTeam = (team: string, bgColor: string) => {
     setTeamName(team);
     setTeamDropdownOpen(false);
   };
@@ -103,15 +103,15 @@ const TaskForm = () => {
                 <span>▼</span>
               </div>
               {teamDropdownOpen && (
-                <div className="absolute z-10 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-y-auto">
+                <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border rounded-md shadow-lg max-h-60 overflow-y-auto">
                   {teamOptions.map((team) => (
                     <div
-                      key={team}
-                      className="p-2 hover:bg-gray-100 cursor-pointer"
-                      onClick={() => selectTeam(team)}
+                      key={team.name}
+                      className={`p-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer flex items-center ${team.bgColor} dark:bg-opacity-20`}
+                      onClick={() => selectTeam(team.name, team.bgColor)}
                     >
                       <span className="mr-2">📑</span>
-                      {team}
+                      {team.name}
                     </div>
                   ))}
                 </div>

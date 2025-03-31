@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import TaskForm from "@/components/TaskForm";
+import Sidebar from "@/components/Sidebar";
 import { Share } from "lucide-react";
 import { 
   Select,
@@ -13,6 +14,7 @@ import {
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 
   useEffect(() => {
     if (darkMode) {
@@ -26,11 +28,22 @@ const Index = () => {
     setDarkMode(!darkMode);
   };
 
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <Header 
+        darkMode={darkMode} 
+        toggleDarkMode={toggleDarkMode} 
+        sidebarCollapsed={sidebarCollapsed}
+        toggleSidebar={toggleSidebar}
+      />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <Sidebar isCollapsed={sidebarCollapsed} />
+      
+      <main className={`transition-all duration-300 ${sidebarCollapsed ? 'ml-0' : 'ml-64'} max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8`}>
         <div className="mb-8">
           <div className="flex justify-between items-start">
             <div>

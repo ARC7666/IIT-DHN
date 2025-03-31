@@ -6,30 +6,23 @@ import { useToast } from "@/hooks/use-toast";
 interface HeaderProps {
   darkMode: boolean;
   toggleDarkMode: () => void;
+  sidebarCollapsed: boolean;
+  toggleSidebar: () => void;
 }
 
-const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
+const Header = ({ darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar }: HeaderProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
+  const [notificationOpen, setNotificationOpen] = useState(false);
   const { toast } = useToast();
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
+    if (notificationOpen) setNotificationOpen(false);
   };
 
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-    toast({
-      title: sidebarCollapsed ? "Sidebar expanded" : "Sidebar collapsed",
-      description: "Sidebar visibility toggled",
-    });
-  };
-
-  const handleNotification = () => {
-    toast({
-      title: "Notifications",
-      description: "You have no new notifications",
-    });
+  const toggleNotification = () => {
+    setNotificationOpen(!notificationOpen);
+    if (profileOpen) setProfileOpen(false);
   };
 
   const handleMenuAction = (action: string) => {
@@ -62,12 +55,28 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
         >
           {darkMode ? <Moon size={20} /> : <Sun size={20} />}
         </button>
-        <button 
-          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          onClick={handleNotification}
-        >
-          <Bell size={20} />
-        </button>
+        <div className="relative">
+          <button 
+            className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            onClick={toggleNotification}
+          >
+            <Bell size={20} />
+          </button>
+          
+          {notificationOpen && (
+            <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-50">
+              <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 className="font-semibold">Notifications</h3>
+              </div>
+              <div className="p-2">
+                <div className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md">
+                  <p className="text-sm font-medium">No new notifications</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Check back later for updates</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
         <div className="relative">
           <div className="flex items-center cursor-pointer" onClick={toggleProfile}>
             <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
