@@ -1,7 +1,8 @@
 
 import React, { useState } from "react";
-import { Bell, ChevronDown, ChevronUp, Link, LogOut, Moon, Sun, User, ChevronRight, ChevronLeft } from "lucide-react";
+import { Bell, ChevronDown, ChevronUp, Link, LogOut, Moon, Sun, User, ChevronRight, ChevronLeft, Menu, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface HeaderProps {
   darkMode: boolean;
@@ -13,6 +14,7 @@ interface HeaderProps {
 const Header = ({ darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar }: HeaderProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const isMobile = useIsMobile();
   const { toast } = useToast();
 
   const toggleProfile = () => {
@@ -34,21 +36,31 @@ const Header = ({ darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar }: H
   };
 
   return (
-    <header className="sticky top-0 z-50 flex justify-between items-center px-6 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+    <header className="sticky top-0 z-50 flex justify-between items-center px-3 sm:px-6 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div className="flex items-center">
+        {isMobile ? (
+          <button 
+            className="p-2 mr-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+            onClick={toggleSidebar}
+          >
+            {sidebarCollapsed ? <Menu size={24} /> : <X size={24} />}
+          </button>
+        ) : null}
         <div className="floww-logo flex items-center font-bold text-lg">
           <span className="text-blue-600 text-xl">ẞ</span>floww
         </div>
-        <div className="ml-4">
-          <button 
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
-            onClick={toggleSidebar}
-          >
-            {sidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-          </button>
-        </div>
+        {!isMobile && (
+          <div className="ml-4">
+            <button 
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+              onClick={toggleSidebar}
+            >
+              {sidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            </button>
+          </div>
+        )}
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 sm:space-x-4">
         <button
           onClick={toggleDarkMode}
           className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -86,13 +98,17 @@ const Header = ({ darkMode, toggleDarkMode, sidebarCollapsed, toggleSidebar }: H
                 className="h-8 w-8 rounded-full object-cover"
               />
             </div>
-            <div className="ml-2 hidden sm:block">
-              <div className="text-sm font-medium">andu</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">View Profile</div>
-            </div>
-            <button className="ml-1">
-              {profileOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-            </button>
+            {!isMobile && (
+              <div className="ml-2 hidden sm:block">
+                <div className="text-sm font-medium">andu</div>
+                <div className="text-xs text-gray-500 dark:text-gray-400">View Profile</div>
+              </div>
+            )}
+            {!isMobile && (
+              <button className="ml-1">
+                {profileOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+              </button>
+            )}
           </div>
           
           {profileOpen && (

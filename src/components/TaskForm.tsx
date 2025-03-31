@@ -4,9 +4,11 @@ import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, Calendar } from "lucide-react";
 import FileUpload from "./FileUpload";
 import { format } from "date-fns";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const TaskForm = () => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [taskName, setTaskName] = useState("");
   const [teamName, setTeamName] = useState("");
   const [assignedTo, setAssignedTo] = useState("");
@@ -72,7 +74,7 @@ const TaskForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
       <div>
         <label htmlFor="taskName" className="block text-sm font-medium mb-1 required-field">
           Task Name
@@ -88,8 +90,8 @@ const TaskForm = () => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div className="space-y-4 sm:space-y-6">
           <div>
             <label htmlFor="teamName" className="block text-sm font-medium mb-1 required-field">
               Team Name
@@ -119,7 +121,7 @@ const TaskForm = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label htmlFor="assignedTo" className="block text-sm font-medium mb-1 required-field">
                 Assigned To
@@ -162,7 +164,7 @@ const TaskForm = () => {
 
           <div>
             <label htmlFor="priority" className="block text-sm font-medium mb-1 required-field">
-              Select Priority
+              Priority
             </label>
             <div className="relative">
               <select
@@ -190,28 +192,28 @@ const TaskForm = () => {
             <div className="mb-2 flex flex-wrap gap-2">
               <button 
                 type="button" 
-                className="time-button"
+                className="time-button text-xs sm:text-sm"
                 onClick={() => setTimeDeadline("2pm Today")}
               >
                 2pm Today
               </button>
               <button 
                 type="button" 
-                className="time-button"
+                className="time-button text-xs sm:text-sm"
                 onClick={() => setTimeDeadline("6pm Today")}
               >
                 6pm Today
               </button>
               <button 
                 type="button" 
-                className="time-button"
+                className="time-button text-xs sm:text-sm"
                 onClick={() => setTimeDeadline("2pm Tomorrow")}
               >
                 2pm Tomorrow
               </button>
               <button 
                 type="button" 
-                className="time-button"
+                className="time-button text-xs sm:text-sm"
                 onClick={() => setTimeDeadline("6pm Tomorrow")}
               >
                 6pm Tomorrow
@@ -259,16 +261,24 @@ const TaskForm = () => {
           </div>
         </div>
 
+        {!isMobile && (
+          <div>
+            <FileUpload />
+          </div>
+        )}
+      </div>
+
+      {isMobile && (
         <div>
           <FileUpload />
         </div>
-      </div>
+      )}
 
-      <div className="flex justify-end space-x-4 mt-8">
-        <button type="button" onClick={handleReset} className="reset-btn">
+      <div className="flex justify-end space-x-4 mt-6 sm:mt-8">
+        <button type="button" onClick={handleReset} className="reset-btn text-sm">
           Reset
         </button>
-        <button type="submit" className="create-task-btn">
+        <button type="submit" className="create-task-btn text-sm">
           Create Task <ArrowRight size={16} />
         </button>
       </div>

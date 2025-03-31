@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -111,6 +110,7 @@
   cursor: pointer;
   border: none;
   margin-right: 0.5rem;
+  white-space: nowrap;
 }
 
 .time-button:hover {
@@ -159,8 +159,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+}
+
+@media (min-width: 640px) {
+  .file-upload-area {
+    padding: 2rem;
+  }
 }
 
 .browse-btn {
@@ -204,4 +210,18 @@
 
 .dark .dropdown-item:hover {
   background-color: #374151;
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .dropdown-menu {
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
+  
+  .time-button {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+  }
 }
