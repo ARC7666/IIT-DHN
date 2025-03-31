@@ -3,6 +3,13 @@ import React, { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import TaskForm from "@/components/TaskForm";
 import { Share } from "lucide-react";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue 
+} from "@/components/ui/select";
 
 const Index = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -27,8 +34,8 @@ const Index = () => {
         <div className="mb-8">
           <div className="flex justify-between items-start">
             <div>
-              <h1 className="text-3xl font-bold flex items-center gap-2 mb-2">
-                <span className="inline-flex items-center justify-center">☰</span>
+              <h1 className="text-3xl font-bold flex items-center gap-2 mb-2 text-gray-800 dark:text-gray-100">
+                <span className="inline-flex items-center justify-center text-blue-600">☰</span>
                 Create Task
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
@@ -36,23 +43,25 @@ const Index = () => {
               </p>
             </div>
             <div className="flex space-x-4">
-              <button className="flex items-center gap-2 px-4 py-2 border rounded-md">
+              <button className="flex items-center gap-2 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 <Share size={16} />
                 Share
               </button>
-              <div className="relative">
-                <select className="appearance-none bg-white border rounded-md py-2 pl-4 pr-10">
-                  <option>Default</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <span>▼</span>
-                </div>
-              </div>
+              <Select defaultValue="Default">
+                <SelectTrigger className="w-[140px] bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700">
+                  <SelectValue placeholder="Default" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Default">Default</SelectItem>
+                  <SelectItem value="Option1">Option 1</SelectItem>
+                  <SelectItem value="Option2">Option 2</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
         
-        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6">
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 border border-gray-200 dark:border-gray-700">
           <TaskForm />
         </div>
       </main>

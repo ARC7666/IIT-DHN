@@ -10,10 +10,26 @@ interface HeaderProps {
 
 const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   const [profileOpen, setProfileOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const { toast } = useToast();
 
   const toggleProfile = () => {
     setProfileOpen(!profileOpen);
+  };
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed(!sidebarCollapsed);
+    toast({
+      title: sidebarCollapsed ? "Sidebar expanded" : "Sidebar collapsed",
+      description: "Sidebar visibility toggled",
+    });
+  };
+
+  const handleNotification = () => {
+    toast({
+      title: "Notifications",
+      description: "You have no new notifications",
+    });
   };
 
   const handleMenuAction = (action: string) => {
@@ -25,25 +41,31 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 flex justify-between items-center px-6 py-3 bg-white dark:bg-gray-800 border-b">
+    <header className="sticky top-0 z-50 flex justify-between items-center px-6 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div className="flex items-center">
-        <div className="floww-logo flex items-center">
-          <span className="text-blue-600">ẞ</span>floww
+        <div className="floww-logo flex items-center font-bold text-lg">
+          <span className="text-blue-600 text-xl">ẞ</span>floww
         </div>
         <div className="ml-4">
-          <button className="p-2">
-            {darkMode ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+          <button 
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors"
+            onClick={toggleSidebar}
+          >
+            {sidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
         </div>
       </div>
       <div className="flex items-center space-x-4">
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
         >
           {darkMode ? <Moon size={20} /> : <Sun size={20} />}
         </button>
-        <button className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700">
+        <button 
+          className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          onClick={handleNotification}
+        >
           <Bell size={20} />
         </button>
         <div className="relative">
@@ -65,23 +87,23 @@ const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
           </div>
           
           {profileOpen && (
-            <div className="dropdown-menu">
+            <div className="dropdown-menu dark:bg-gray-800 dark:border dark:border-gray-700">
               <button 
-                className="dropdown-item w-full text-left"
+                className="dropdown-item w-full text-left dark:hover:bg-gray-700"
                 onClick={() => handleMenuAction("Profile")}
               >
                 <User className="mr-2 h-4 w-4" />
                 <span>Profile</span>
               </button>
               <button 
-                className="dropdown-item w-full text-left"
+                className="dropdown-item w-full text-left dark:hover:bg-gray-700"
                 onClick={() => handleMenuAction("Shared Links")}
               >
                 <Link className="mr-2 h-4 w-4" />
                 <span>Shared Links</span>
               </button>
               <button 
-                className="dropdown-item w-full text-left"
+                className="dropdown-item w-full text-left dark:hover:bg-gray-700"
                 onClick={() => handleMenuAction("Logout")}
               >
                 <LogOut className="mr-2 h-4 w-4" />
